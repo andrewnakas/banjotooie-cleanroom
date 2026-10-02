@@ -166,7 +166,10 @@ def paint(uid, key, fact):
             ops.append({"eye": {"c": [x, y], "r": [r, r * w / h], "iris": iris, "irisr": 0.62,
                                 "pupil": 0.0 if iris == K else 0.5, "look": list(look), "border": 0.3, "hl": r >= 0.08}})
     ops.append({"outline": 1, "c": [25, 20, 20]})
-    out = facepaint.render({"base": "grid", "detail": 0.04, "ops": ops}, w, h, grid=fact["grid"], alpha=alpha,
+    g = np.asarray(fact["grid"], np.float32)          # averaging greys the colours: push saturation back up
+    lum = g[:, :3].mean(1, keepdims=True)
+    g[:, :3] = np.clip(lum + (g[:, :3] - lum) * 1.45, 0, 255)
+    out = facepaint.render({"base": "grid", "detail": 0.04, "ops": ops}, w, h, grid=g.tolist(), alpha=alpha,
                            seed=h32("face", key))
     out = np.clip(out, 0, 255).astype(np.uint8)
     if uid in TEXT:
