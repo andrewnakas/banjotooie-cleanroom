@@ -19,6 +19,7 @@
 - Verified in the browser (2026-10-01 20:40, `shots/web2/sheet.png`): new game -> intro story text, Klungo and Mumbo dialog with heads and the re-typeset font, card game scene.
 - Clock faces drawn (`drawn.py`).
 - Verified in the browser (2026-10-01 20:40, `shots/web2/sheet.png`): new game -> intro story text, Klungo and Mumbo dialog with heads and the re-typeset font, card game scene.
+- **Dialog heads rendered from the characters' own models** with our textures for 33 icons (`portraits.py`: sprite -> model + head crop; front view). The other ~75 briefed icons keep grid colours + eyes (`faces.py`); extend `portraits.MAP` using `sheets/c_models0.png` / `c_models1.png` (labelled renders of all 194 eyed models).
 - 276 model eye textures (190 models) painted from one generic eye brief; iris / eyelid colour from the kept grid (`eye_keys.json` is only a list of texture keys).
 
 ## Decisions (log)
@@ -41,7 +42,7 @@
 1. Verify the briefed faces in game (dialog heads, pause menu icons) and fix eye positions that are off.
 2. More text-bearing textures: signs in levels (list in `sheets/d_eyes1.png` bottom row: 2b82..2b84), Jamjars / Wumba signs, "SUPERLIFE"/"BAZZA" (0x7E4), playing cards (0x8AE..), clock face.
 3. Two-dot eyes (white square, two black dots) and big 32/64 px eyes (0x85F, 0x91D..).
-4. Portraits rendered from the characters' own models (`project.render3d`) instead of grid + eyes.
+4. More model-rendered portraits (Jinjos, hooded frogs, robots, the remaining characters); item icons (eggs, feathers, notes, Jiggy) rendered from their models.
 5. Pixel data inside code/overlays (boot logos, crash font): find and add to taint.
 
 ## For the morning

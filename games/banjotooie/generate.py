@@ -14,7 +14,9 @@ from PIL import Image
 
 from cleanroom.decomp.gen import from_digest, h32, unpack_alpha2
 from cleanroom.gfx import texfmt as T
-from games.banjotooie import assetfs as A, formats as F, logos
+from games.banjotooie import assetfs as A, formats as F, logos, portraits
+
+PORTRAIT_MODELS = {m for m, _ in portraits.MAP.values()}
 
 HOOKS = []          # functions (key, fact, rgba) -> rgba or None
 OVERRIDE = {}       # texture key -> rgba (whole-model bakes: logos)
@@ -153,7 +155,7 @@ def register_hooks():
     if HOOKS:
         return
     import importlib
-    for name in ("text", "signs", "faces", "drawn"):
+    for name in ("text", "signs", "portraits", "faces", "drawn"):
         try:
             m = importlib.import_module("games.banjotooie." + name)
         except ModuleNotFoundError:
@@ -188,4 +190,6 @@ def build_entries(spec, only=None):
             elif e.type == 0x18:
                 gen_tex(d, F.font_glyphs(e.uid, d), facts)
         e.set(d)
+        if e.type == 0x10 and e.uid in PORTRAIT_MODELS:
+            portraits.ENTRIES[e.uid] = bytes(d)
     return es
