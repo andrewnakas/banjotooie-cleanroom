@@ -36,6 +36,7 @@
 - BT eye textures: 16x16 CI4, iris right/below centre, highlight lower left, eyelid band along the bottom.
 - The decomp has no sound-effect names: voice slots must be found another way (pitch + duration).
 
+- Pattern seen four times: the FIRST native run of a freshly built ROM times out after 2 of 3 frames and the rerun passes (first-run effect in the native emulator for a new ROM MD5, cause not found; the browser build with a fresh profile is not affected). Rerun before believing a stall.
 - The native boot test (`tools/m64p_test.py`) timed out twice on ROMs that passed on reruns (machine load from other sessions, or an intermittent emulator stall). So the earlier "empty tiles stall the game" diagnosis rests on two failed runs and may have been partly this; the noise fill is harmless either way.
 
 ## Next
