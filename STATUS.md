@@ -16,6 +16,8 @@
 - Placeholder voices: 96 voice-like slots carry Piper gibberish (`voices.py`).
 - Clock faces drawn (`drawn.py`).
 - Verified in the browser (2026-10-01 20:40, `shots/web2/sheet.png`): new game -> intro story text, Klungo and Mumbo dialog with heads and the re-typeset font, card game scene.
+- Clock faces drawn (`drawn.py`).
+- Verified in the browser (2026-10-01 20:40, `shots/web2/sheet.png`): new game -> intro story text, Klungo and Mumbo dialog with heads and the re-typeset font, card game scene.
 - 276 model eye textures (190 models) painted from one generic eye brief; iris / eyelid colour from the kept grid (`eye_keys.json` is only a list of texture keys).
 
 ## Decisions (log)
@@ -31,6 +33,8 @@
 - BT models are F3DEX2 (G_VTX 0x01, G_TRI 0x05/0x06, G_ENDDL 0xDF); texture list entries are 8 bytes.
 - BT eye textures: 16x16 CI4, iris right/below centre, highlight lower left, eyelid band along the bottom.
 - The decomp has no sound-effect names: voice slots must be found another way (pitch + duration).
+
+- The native boot test (`tools/m64p_test.py`) timed out once on a ROM that passed on the rerun (machine load from other sessions, or an intermittent emulator stall). So the earlier "empty tiles stall the game" diagnosis rests on two failed runs and may have been partly this; the noise fill is harmless either way.
 
 ## Next
 1. Verify the briefed faces in game (dialog heads, pause menu icons) and fix eye positions that are off.
