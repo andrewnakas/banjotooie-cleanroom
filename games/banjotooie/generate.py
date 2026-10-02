@@ -98,6 +98,8 @@ def put_tex(d, r, rgba):
 def gen_tex(d, regs, facts):
     for r in regs:
         fact = facts.get(r["key"])
+        if fact is not None and "a" in r:
+            fact = dict(fact, adv=r["a"])       # font glyph advance (kept metric)
         if fact is not None:
             put_tex(d, r, pixels(r["key"], fact))
 
