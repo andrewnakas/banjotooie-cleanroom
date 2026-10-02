@@ -153,7 +153,7 @@ def register_hooks():
     if HOOKS:
         return
     import importlib
-    for name in ("text", "faces", "drawn"):
+    for name in ("text", "signs", "faces", "drawn"):
         try:
             m = importlib.import_module("games.banjotooie." + name)
         except ModuleNotFoundError:

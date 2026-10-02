@@ -12,6 +12,8 @@
 - Title logo, GAME OVER, THE END re-lettered in model space and baked into their tiles (`logos.py`, `modelgeo.py` F3DEX2, `project.py`).
 - All three fonts re-typeset with open fonts (`text.py`: dialog 0xC21, large 0xC22, counter 0xC23).
 - HUD buttons re-typeset (A, B, C arrows, R, Z, START, ?) and ~110 dialog head icons / item sprites given eyes, noses, mouths, outlines from briefs (`faces.py`, preview: `python -m games.banjotooie.facesheet <spec> out.png`).
+- 26 level sign textures re-typeset (`signs.py`: FLOOR n, FIRE EXIT, NO ENTRY, CLOSED, TICKETS, BOILER PLANT, SEWER ACCESS, QUALITY CONTROL, CABLE ROOM, REPAIR DEPOT, PACKING ROOM, HAILFIRE PEAKS OIL PIPELINE, SAUCER of PERIL, CAVE OF HORRORS, JOLLY'S, HAG 1, GO, GUN POWDER, SOUR MILK). Not yet: staff name plaques (x31e7..x31f4), WEIRD ALIEN neon (x2568..), EMPTY (x2f2c), tiny notes (m8bb.10).
+- Placeholder voices: 96 voice-like slots carry Piper gibberish (`voices.py`).
 - 276 model eye textures (190 models) painted from one generic eye brief; iris / eyelid colour from the kept grid (`eye_keys.json` is only a list of texture keys).
 
 ## Decisions (log)
