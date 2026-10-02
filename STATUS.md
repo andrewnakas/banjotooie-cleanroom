@@ -6,7 +6,7 @@
 - **Boots and plays**: natively (mupen64plus, `tools/m64p_test.py`: title, attract demos) and in headless Edge (EmulatorJS: boot, title, Enter -> file select -> into the game; `shots/web1/sheet.png`).
 - **Audio**: all 827 waves resynthesised, own 4-predictor books, bank sizes = retail. `audio check` OK.
 - **Taint: 0 failing** (33110 texture streams raw + RGBA, ADPCM + decoded PCM + books).
-- Published: source at https://github.com/andrewnakas/banjotooie-cleanroom ; Pages via `sh tools/publish.sh "msg"` (always runs the taint scan first and aborts on any failure).
+- **Published and live**: https://andrewnakas.github.io/banjotooie-cleanroom/ (verified in headless Edge: loads, boots to the title with the re-typeset copyright line; first load takes about a minute for the 32 MB ROM). Source: https://github.com/andrewnakas/banjotooie-cleanroom ; republish via `sh tools/publish.sh "msg"` (always runs the taint scan first and aborts on any failure).
 
 ## Readable / faces / pictures done
 - Title logo, GAME OVER, THE END re-lettered in model space and baked into their tiles (`logos.py`, `modelgeo.py` F3DEX2, `project.py`).
