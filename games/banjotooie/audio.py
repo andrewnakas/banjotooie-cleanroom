@@ -164,12 +164,18 @@ def spec(rom, out):
           f"{overlap} overlaps, {clip} clipped samples, {len(bad)} loops out of range")
 
 
-def build(spec_dir, overrides=None, progress=False):
-    ctl = bytearray(open(os.path.join(spec_dir, "sound/ctl.bin"), "rb").read())
+def build(spec_dir, overrides=None, progress=False, only=None, prev=None):
+    """only + prev=(ctl, tbl): re-encode just the waves whose tbl offset is in `only` into a previous build."""
     S = json.load(open(os.path.join(spec_dir, "sound/samples.json")))
-    tbl = bytearray(S["tbl_len"])
+    if prev:
+        ctl, tbl = bytearray(prev[0]), bytearray(prev[1])
+    else:
+        ctl = bytearray(open(os.path.join(spec_dir, "sound/ctl.bin"), "rb").read())
+        tbl = bytearray(S["tbl_len"])
     for i, (key, d) in enumerate(S["waves"].items()):
         base = int(key)
+        if only is not None and base not in only:
+            continue
         nf = d["nframes"]
         x = overrides(base, d) if overrides else None
         if x is None:

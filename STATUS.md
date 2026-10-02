@@ -34,9 +34,12 @@
 3. Two-dot eyes (white square, two black dots) and big 32/64 px eyes (0x85F, 0x91D..).
 4. Portraits rendered from the characters' own models (`project.render3d`) instead of grid + eyes.
 5. Pixel data inside code/overlays (boot logos, crash font): find and add to taint.
-6. Voices: Piper placeholders + practice pack `D:/n64work/banjotooie/practice/`.
 
 ## For the morning
-- Play https://andrewnakas.github.io/banjotooie-cleanroom/ in Chrome/Edge. Keys: arrows move, X = A, C = B, Z = Z, S = R, Q = L, Enter = Start, I/J/K/L = C buttons.
+- Play https://andrewnakas.github.io/banjotooie-cleanroom/ in Chrome/Edge (first load ~1 min). Keys: arrows move, X = A, C = B, Z = Z, S = R, Q = L, Enter = Start, I/J/K/L = C buttons.
 - Look at: title screen, file select, first dialog (heads + font), pause menu.
-- Voices: practice pack not built yet.
+- **Voices**: the decomp names no sound effects, so 96 voice-like slots were picked automatically (short, voiced, speech-like pitch) and grouped LOW / MID / HIGH by pitch. They now carry Piper gibberish placeholders (`games/banjotooie/voices/<sfx>.wav`). Some slots may be non-voice effects: listen and delete the wav of any that is wrong (then rerun the two commands below after a full `audio build`).
+- **Record**: practice pack at `D:/n64work/banjotooie/practice/` (`SCRIPT.txt`, `practice_LOW|MID|HIGH_call_and_response.wav`, `clips/`; personal use, never publish). Save each take as `games/banjotooie/voices/<sfx index>.wav`, then:
+  `python -m games.banjotooie.voices apply D:/n64work/banjotooie/spec D:/n64work/banjotooie/build/sound`,
+  `python -m games.banjotooie.build_rom D:/n64work/banjotooie/spec D:/n64work/banjotooie/build/bt_clean.z64`, `sh tools/publish.sh "voices"`.
+- Disk: D: was down to 10-14 GB free during the night (other sessions); this game uses ~0.3 GB.
