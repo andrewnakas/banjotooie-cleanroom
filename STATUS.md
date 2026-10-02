@@ -19,7 +19,7 @@
 - Verified in the browser (2026-10-01 20:40, `shots/web2/sheet.png`): new game -> intro story text, Klungo and Mumbo dialog with heads and the re-typeset font, card game scene.
 - Clock faces drawn (`drawn.py`).
 - Verified in the browser (2026-10-01 20:40, `shots/web2/sheet.png`): new game -> intro story text, Klungo and Mumbo dialog with heads and the re-typeset font, card game scene.
-- **Dialog heads rendered from the characters' own models** with our textures for 33 icons (`portraits.py`: sprite -> model + head crop; front view). The other ~75 briefed icons keep grid colours + eyes (`faces.py`); extend `portraits.MAP` using `sheets/c_models0.png` / `c_models1.png` (labelled renders of all 194 eyed models).
+- **Dialog heads rendered from the characters' own models** with our textures for 39 icons (`portraits.py`: sprite -> model + head crop; front view). Mumbo (0xBD9 -> model 0x661), 0xB9D and 0xBB4 were tried and dropped: the head crop frames badly (render3d centres on the crop but does not clip). The other ~70 briefed icons keep grid colours + eyes (`faces.py`); extend `portraits.MAP` using `sheets/c_models0.png` / `c_models1.png` (labelled renders of all 194 eyed models).
 - 276 model eye textures (190 models) painted from one generic eye brief; iris / eyelid colour from the kept grid (`eye_keys.json` is only a list of texture keys).
 
 ## Decisions (log)
