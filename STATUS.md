@@ -46,6 +46,9 @@
 4. More model-rendered portraits (Jinjos, hooded frogs, robots, the remaining characters); item icons (eggs, feathers, notes, Jiggy) rendered from their models.
 5. Pixel data inside code/overlays (boot logos, crash font): find and add to taint.
 
+## Pending (2026-10-01 ~22:45)
+- **Not yet published**: the ROM with 39 model-rendered heads (`build/bt_clean.z64`, commit a600c52) booted natively, but its publish job was stopped by Claude Code because the PC ran critically low on memory during the taint scan. The live site still has the 33-head build (taint 0 failing). To publish: `sh tools/publish.sh "39 model-rendered dialog heads"` (runs the taint scan, ~10 min, needs a few GB of RAM free).
+
 ## For the morning
 - Play https://andrewnakas.github.io/banjotooie-cleanroom/ in Chrome/Edge (first load ~1 min). Keys: arrows move, X = A, C = B, Z = Z, S = R, Q = L, Enter = Start, I/J/K/L = C buttons.
 - Look at: title screen, file select, first dialog (heads + font), pause menu.
