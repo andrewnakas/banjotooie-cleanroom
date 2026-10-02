@@ -210,9 +210,21 @@ def paint_eye(key, fact):
     return np.clip(out, 0, 255).astype(np.uint8)
 
 
+DOT_KEYS = set(json.load(open(os.path.join(os.path.dirname(__file__), "dot_eye_keys.json"))))
+
+
+def paint_dots(key, fact):
+    """Simple faces: a white patch with two black dot eyes side by side."""
+    ops = [{"e": [0.33, 0.5, 0.085, 0.10], "c": [10, 10, 14]}, {"e": [0.67, 0.5, 0.085, 0.10], "c": [10, 10, 14]}]
+    out = facepaint.render({"base": [250, 250, 248], "ops": ops}, fact["w"], fact["h"], alpha=None)
+    return np.clip(out, 0, 255).astype(np.uint8)
+
+
 def hook(key, fact, rgba):
     if key in EYE_KEYS:
         return paint_eye(key, fact)
+    if key in DOT_KEYS:
+        return paint_dots(key, fact)
     if key[0] != "s":
         return None
     uid = int(key[1:].split(".")[0], 16)
