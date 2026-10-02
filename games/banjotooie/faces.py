@@ -174,7 +174,42 @@ def paint(uid, key, fact):
     return out
 
 
+# Model eye textures (listed in eye_keys.json: a list of texture keys, our label "this is an eye"). Banjo-Tooie
+# eyes share one layout: white ball, iris slightly right of and below the centre, big pupil, highlight at the
+# lower left, optional eyelid band along the bottom. Iris and lid colours come from the kept grid.
+import colorsys
+import json
+
+EYE_KEYS = set(json.load(open(os.path.join(os.path.dirname(__file__), "eye_keys.json"))))
+
+
+def _sat(c):
+    h, l, s = colorsys.rgb_to_hls(*(np.asarray(c[:3], np.float32) / 255))
+    return s * (1 - abs(l - 0.5) * 1.2)
+
+
+def paint_eye(key, fact):
+    w, h = fact["w"], fact["h"]
+    g = np.asarray(fact["grid"], np.float32).reshape(4, 4, 4)
+    iris = max(g[:3].reshape(-1, 4), key=_sat)[:3]
+    iris = np.clip((iris - 128) * 1.5 + 128, 0, 255)          # grid cells average the iris with white / pupil
+    iris = np.clip(iris * max(1.0, 190.0 / max(float(iris.max()), 1.0)), 0, 255)
+    bot = g[3, :, :3].mean(0)
+    lid = _sat(bot) > 0.25 and np.abs(g[3, :, :3] - bot).max() < 40 and np.abs(bot - g[2, :, :3].mean(0)).max() > 50
+    ops = [{"e": [0.56, 0.56, 0.43, 0.43], "c": list(iris * 0.45)},
+           {"e": [0.56, 0.56, 0.37, 0.37], "c": list(iris)},
+           {"arc": [0.56, 0.56, 0.30, 0.30, 180, 330], "w": 0.09, "c": list(np.clip(iris * 1.3 + 25, 0, 255))},
+           {"e": [0.60, 0.60, 0.21, 0.22], "c": [8, 8, 12]},
+           {"e": [0.30, 0.74, 0.10, 0.10], "c": [255, 255, 255]}]
+    if lid:
+        ops += [{"rect": [0, 0.78, 1, 1], "c": list(bot)}]
+    out = facepaint.render({"base": [248, 248, 246], "ops": ops}, w, h, alpha=None, seed=h32("eye", key))
+    return np.clip(out, 0, 255).astype(np.uint8)
+
+
 def hook(key, fact, rgba):
+    if key in EYE_KEYS:
+        return paint_eye(key, fact)
     if key[0] != "s":
         return None
     uid = int(key[1:].split(".")[0], 16)

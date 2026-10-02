@@ -107,4 +107,15 @@ def sign_textures(uid, d):
     """-> {texture index: RGBA} for a sign model (d: its kept bytes: geometry only)."""
     lo, hi = _box(d)
     W, H = int((hi[0] - lo[0]) * PX), int((hi[1] - lo[1]) * PX)
-    return P.bake(d, canvas_fn(word_art(W, H, SIGNS[uid]), lo, hi))
+    out = P.bake(d, canvas_fn(word_art(W, H, SIGNS[uid]), lo, hi))
+    rng = np.random.default_rng(uid)
+    edge = np.array(SIGNS[uid][0][4][:3], np.int16)
+    for i, t in out.items():
+        # transparent texels: the outline colour (no dark fringe when filtered) plus noise. Tiles that are
+        # mostly empty otherwise deflate to almost nothing, and the game stalls on the title (found by bisecting).
+        t = t.copy()
+        m = t[..., 3] < 8
+        t[m, :3] = np.clip(edge + rng.integers(-24, 25, (int(m.sum()), 3)), 0, 255)
+        t[m, 3] = 0
+        out[i] = t
+    return out

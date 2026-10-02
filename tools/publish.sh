@@ -1,6 +1,6 @@
 #!/bin/sh
 # Rebuild the site from the clean ROM and push gh-pages (taint must pass first).
-#   sh tools/publish.sh "message"      (SKIP_TAINT=1 only if the taint report just ran on this exact ROM)
+#   sh tools/publish.sh "message"
 set -e
 W=/d/n64work/banjotooie
 ROM=$W/build/bt_clean.z64
@@ -8,9 +8,10 @@ RETAIL="$W/rom/Banjo-Tooie (USA).z64"
 EJS=C:/Users/andre/n64work/mk64/emu
 REPO=andrewnakas/banjotooie-cleanroom
 cd /d/n64work/banjotooie-cleanroom
-if [ -z "$SKIP_TAINT" ]; then
-  python -m games.banjotooie.taint_report "$RETAIL" $ROM | tail -3
-fi
+# the taint scan always runs on the exact ROM being published; any failing run aborts the publish
+python -m games.banjotooie.taint_report "$RETAIL" $ROM > $W/build/taint.log 2>&1 || { tail -5 $W/build/taint.log; echo "TAINT FAILED: not publishing"; exit 1; }
+tail -1 $W/build/taint.log
+grep -q "FAILING (>= 32 B run): 0$" $W/build/taint.log || { echo "taint summary missing: not publishing"; exit 1; }
 python ports/ejs/patch_core.py $ROM $EJS/cores_orig $W/emu/cores | tail -1
 if [ ! -d $W/site/.git ]; then
   mkdir -p $W/site && cd $W/site && git init -q && git remote add origin https://github.com/$REPO.git
