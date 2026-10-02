@@ -51,6 +51,7 @@ MAP = {
     0xBF6: (0x83B, (0.33, 0.35, 0.67, 0.8)),     # long ears
     0xBA0: (0x66D, (0.25, 0.4, 0.75, 1.0)),     # miner
     0xBE0: (0x808, (0.0, 0.0, 1.0, 1.0)),       # metal box
+    0xBD9: (0x661, (0.40, 0.50, 0.60, 0.86)),   # Mumbo
 }
 ENTRIES = {}      # uid -> generated model bytes (set by generate.build_entries as models are generated)
 _CACHE = {}

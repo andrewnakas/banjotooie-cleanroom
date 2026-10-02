@@ -19,7 +19,7 @@
 - Verified in the browser (2026-10-01 20:40, `shots/web2/sheet.png`): new game -> intro story text, Klungo and Mumbo dialog with heads and the re-typeset font, card game scene.
 - Clock faces drawn (`drawn.py`).
 - Verified in the browser (2026-10-01 20:40, `shots/web2/sheet.png`): new game -> intro story text, Klungo and Mumbo dialog with heads and the re-typeset font, card game scene.
-- **Dialog heads rendered from the characters' own models** with our textures for 39 icons (`portraits.py`: sprite -> model + head crop; front view). Mumbo (0xBD9 -> model 0x661), 0xB9D and 0xBB4 were tried and dropped: the head crop frames badly (render3d centres on the crop but does not clip). The other ~70 briefed icons keep grid colours + eyes (`faces.py`); extend `portraits.MAP` using `sheets/c_models0.png` / `c_models1.png` (labelled renders of all 194 eyed models).
+- **Dialog heads rendered from the characters' own models** with our textures for 40 icons (`portraits.py`: sprite -> model + head crop; front view). 0xB9D and 0xBB4 were tried and dropped (bad framing); render3d now clips to the crop, so they can be retried. The other ~70 briefed icons keep grid colours + eyes (`faces.py`); extend `portraits.MAP` using `sheets/c_models0.png` / `c_models1.png` (labelled renders of all 194 eyed models).
 - 276 model eye textures (190 models) painted from one generic eye brief; iris / eyelid colour from the kept grid (`eye_keys.json` is only a list of texture keys).
 
 ## Decisions (log)
@@ -47,7 +47,7 @@
 5. Pixel data inside code/overlays (boot logos, crash font): find and add to taint.
 
 ## Pending (2026-10-01 ~22:45)
-- **Not yet published**: the ROM with 39 model-rendered heads (`build/bt_clean.z64`, commit a600c52) booted natively, but its publish job was stopped by Claude Code because the PC ran critically low on memory during the taint scan. The live site still has the 33-head build (taint 0 failing). To publish: `sh tools/publish.sh "39 model-rendered dialog heads"` (runs the taint scan, ~10 min, needs a few GB of RAM free).
+- **Not yet published**: the ROM with 40 model-rendered heads, now clipped to their head crop and with Mumbo back (`build/bt_clean.z64`; preview `sheets/c_portraits.png`; this latest rebuild has not been boot-tested, the one before it booted natively), but its publish job was stopped by Claude Code because the PC ran critically low on memory during the taint scan. The live site still has the 33-head build (taint 0 failing). To publish: `python tools/m64p_test.py D:/n64work/banjotooie/build/bt_clean.z64 D:/n64work/banjotooie/shots/bootN` then `sh tools/publish.sh "40 model-rendered dialog heads"` (runs the taint scan, ~10 min, needs a few GB of RAM free).
 
 ## For the morning
 - Play https://andrewnakas.github.io/banjotooie-cleanroom/ in Chrome/Edge (first load ~1 min). Keys: arrows move, X = A, C = B, Z = Z, S = R, Q = L, Enter = Start, I/J/K/L = C buttons.

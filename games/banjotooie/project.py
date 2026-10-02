@@ -175,4 +175,8 @@ def render3d(d, tex, size=64, view="front", crop=None, bg=(0, 0, 0, 0)):
         zsub = zb[by0:by1 + 1, bx0:bx1 + 1].reshape(-1)
         zsub[idx] = z
         zb[by0:by1 + 1, bx0:bx1 + 1] = zsub.reshape(by1 - by0 + 1, bx1 - bx0 + 1)
+    if crop:                                      # clip to the crop rectangle (the view is a square around it)
+        hw, hh = (x1 - x0) / 2 / span * N, (y1 - y0) / 2 / span * N
+        keep = (np.abs(gx + 0.5 - N / 2) <= hw) & (np.abs(gy + 0.5 - N / 2) <= hh)
+        img[~keep] = bg
     return img.reshape(size, ss, size, ss, 4).mean((1, 3)).clip(0, 255).astype(np.uint8)
