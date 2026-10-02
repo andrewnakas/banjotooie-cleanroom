@@ -14,9 +14,10 @@ from PIL import Image
 
 from cleanroom.decomp.gen import from_digest, h32, unpack_alpha2
 from cleanroom.gfx import texfmt as T
-from games.banjotooie import assetfs as A, formats as F
+from games.banjotooie import assetfs as A, formats as F, logos
 
 HOOKS = []          # functions (key, fact, rgba) -> rgba or None
+OVERRIDE = {}       # texture key -> rgba (whole-model bakes: logos)
 
 
 def quantize(rgba, n):
@@ -61,6 +62,8 @@ def dither(key, rgba, amp=6):
 
 
 def pixels(key, fact):
+    if key in OVERRIDE:
+        return OVERRIDE[key]
     rgba = from_digest(key, fact)
     if "ishape2" in fact:                     # intensity sprite: our own soft shape from the kept outline
         from PIL import ImageFilter
@@ -173,6 +176,8 @@ def build_entries(spec, only=None):
         d = bytearray(e._data)
         if only is None or e.uid in only:
             if e.type == 0x10:
+                if e.uid in logos.SIGNS:
+                    OVERRIDE.update({f"m{e.uid:x}.{i}": t for i, t in logos.sign_textures(e.uid, bytes(d)).items()})
                 gen_tex(d, F.model_textures(e.uid, d), facts)
             elif e.type == 0x13 and e.uid in info:
                 gen_tex(d, F.ext_texture(e.uid, d, info[e.uid]), facts)
