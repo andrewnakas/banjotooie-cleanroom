@@ -48,6 +48,12 @@ _l("x2b3a", ["PACKING", "ROOM"], WHITE)
 _l("x2b82", ["HAILFIRE PEAKS", "OIL PIPELINE"], BLACK)
 _l("x2e8d", ["SOUR", "MILK", "HIGH FAT", "LOW IN CALCIUM"], BLUE)
 
+# name plaques (staff names as written in the game; two readings are uncertain: K. CONWELL, D. PASHUTE)
+for _u, _n in zip(range(0x31E7, 0x31F5), ["D. JONES", "S. HURST", "G. KIRKHOPE", "E. BRYAN", "S. MAYLES", "G. MAYLES",
+                                          "C. SUTHERLAND", "P. MACHACEK", "K. CONWELL", "M. WILSON", "D. PASHUTE",
+                                          "S. MALPASS", "W. BRYAN", "S. FILECCIA"]):
+    _l(f"x{_u:x}", [_n], BLACK)
+
 
 def _board(fact, W, H, col):
     """Board colour: the grid cells that are far from the text colour (the background), averaged."""

@@ -12,7 +12,8 @@
 - Title logo, GAME OVER, THE END re-lettered in model space and baked into their tiles (`logos.py`, `modelgeo.py` F3DEX2, `project.py`).
 - All three fonts re-typeset with open fonts (`text.py`: dialog 0xC21, large 0xC22, counter 0xC23).
 - HUD buttons re-typeset (A, B, C arrows, R, Z, START, ?) and ~110 dialog head icons / item sprites given eyes, noses, mouths, outlines from briefs (`faces.py`, preview: `python -m games.banjotooie.facesheet <spec> out.png`).
-- 26 level sign textures re-typeset (`signs.py`: FLOOR n, FIRE EXIT, NO ENTRY, CLOSED, TICKETS, BOILER PLANT, SEWER ACCESS, QUALITY CONTROL, CABLE ROOM, REPAIR DEPOT, PACKING ROOM, HAILFIRE PEAKS OIL PIPELINE, SAUCER of PERIL, CAVE OF HORRORS, JOLLY'S, HAG 1, GO, GUN POWDER, SOUR MILK). Not yet: staff name plaques (x31e7..x31f4), WEIRD ALIEN neon (x2568..), EMPTY (x2f2c), tiny notes (m8bb.10).
+- 26 level sign textures re-typeset (`signs.py`: FLOOR n, FIRE EXIT, NO ENTRY, CLOSED, TICKETS, BOILER PLANT, SEWER ACCESS, QUALITY CONTROL, CABLE ROOM, REPAIR DEPOT, PACKING ROOM, HAILFIRE PEAKS OIL PIPELINE, SAUCER of PERIL, CAVE OF HORRORS, JOLLY'S, HAG 1, GO, GUN POWDER, SOUR MILK). Plus the 14 name plaques x31e7..x31f4 (two uncertain readings: K. CONWELL, D. PASHUTE; the middle floor sign is typeset FLOOR 4 but may be FLOOR 2). Not yet: WEIRD ALIEN neon (x2568..), EMPTY (x2f2c), tiny notes (m8bb.10).
+- 13 two-dot eye textures painted (`dot_eye_keys.json`).
 - Placeholder voices: 96 voice-like slots carry Piper gibberish (`voices.py`).
 - Clock faces drawn (`drawn.py`).
 - Verified in the browser (2026-10-01 20:40, `shots/web2/sheet.png`): new game -> intro story text, Klungo and Mumbo dialog with heads and the re-typeset font, card game scene.
@@ -34,7 +35,7 @@
 - BT eye textures: 16x16 CI4, iris right/below centre, highlight lower left, eyelid band along the bottom.
 - The decomp has no sound-effect names: voice slots must be found another way (pitch + duration).
 
-- The native boot test (`tools/m64p_test.py`) timed out once on a ROM that passed on the rerun (machine load from other sessions, or an intermittent emulator stall). So the earlier "empty tiles stall the game" diagnosis rests on two failed runs and may have been partly this; the noise fill is harmless either way.
+- The native boot test (`tools/m64p_test.py`) timed out twice on ROMs that passed on reruns (machine load from other sessions, or an intermittent emulator stall). So the earlier "empty tiles stall the game" diagnosis rests on two failed runs and may have been partly this; the noise fill is harmless either way.
 
 ## Next
 1. Verify the briefed faces in game (dialog heads, pause menu icons) and fix eye positions that are off.
