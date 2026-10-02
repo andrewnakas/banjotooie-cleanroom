@@ -21,6 +21,10 @@ python ports/ejs/make_site.py $ROM $EJS/ejs $W/site
 cp $W/emu/cores/*.data $W/site/data/cores/
 # one orphan commit per deploy: the Pages builder chokes on a long history of 32 MB ROMs
 cd $W/site && git checkout -q --orphan tmp && git add -A && git commit -qm "Site: ${1:-rebuild}" \
-  && { git branch -D gh-pages -q 2>/dev/null || true; } && git branch -m gh-pages && git push -q -f origin gh-pages \
-  && git gc -q --prune=now && echo "pushed gh-pages"
+  && { git branch -D gh-pages -q 2>/dev/null || true; } && git branch -m gh-pages
+git config http.postBuffer 157286400
+# the 32 MB push sometimes times out (HTTP 408): retry, then check the remote really has this commit
+for i in 1 2 3; do git push -q -f origin gh-pages && break; echo "push failed, retry $i"; sleep 20; done
+git ls-remote origin gh-pages | grep -q $(git rev-parse HEAD) || { echo "PUSH FAILED"; exit 1; }
+git gc -q --prune=now && echo "pushed gh-pages"
 gh api -X POST repos/$REPO/pages/builds -q .status 2>/dev/null || true
